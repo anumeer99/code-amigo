@@ -153,6 +153,14 @@ export default function JobDetailPage() {
     try {
       const fd = form.formData;
       const selectedCountry = countries.find((c) => c.code === fd.country) || countries[0];
+
+      const resumeBase64 = await new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result.split(',')[1]);
+        reader.onerror = reject;
+        reader.readAsDataURL(fd.resume);
+      });
+
       await applyJob({
         jobId: job.id, jobSlug: job.slug, jobTitle: job.title,
         fullName: fd.fullName.trim(), email: fd.email.trim(),
@@ -160,6 +168,7 @@ export default function JobDetailPage() {
         country: selectedCountry.name, countryCode: selectedCountry.code,
         address: fd.address.trim(),
         resumeFileName: fd.resume.name, resumeFileSize: fd.resume.size,
+        resumeBase64,
         submittedAt: new Date().toISOString(),
       });
       setLocalSubmitting(false);

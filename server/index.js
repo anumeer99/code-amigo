@@ -8,10 +8,10 @@ import { consultationRequestTemplate, jobApplicationTemplate } from './emailTemp
 
 const app = express();
 const PORT = process.env.PORT || 3001;
-const NOTIFY_EMAIL = process.env.NOTIFY_EMAIL || 'a.numeer99@gmail.com';
+const NOTIFY_EMAILS = (process.env.NOTIFY_EMAILS || 'a.numeer99@gmail.com,m.rohanijaz@gmail.com').split(',');
 
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ limit: '10mb' }));
 
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST,
@@ -64,7 +64,7 @@ app.post('/api/send-email', async (req, res) => {
   try {
     await transporter.sendMail({
       from: `"Code Amigo Website" <${process.env.SMTP_USER}>`,
-      to: NOTIFY_EMAIL,
+      to: NOTIFY_EMAILS,
       replyTo: email,
       subject: 'New Consultation Request - Code Amigo Website',
       html: consultationRequestTemplate({ fullName, email, phone, country, countryCode, budget, projectDetails, submittedAt }),
@@ -90,6 +90,7 @@ app.post('/api/apply-job', async (req, res) => {
     address,
     resumeFileName,
     resumeFileSize,
+    resumeBase64,
     submittedAt,
   } = req.body;
 
@@ -128,13 +129,22 @@ app.post('/api/apply-job', async (req, res) => {
   saveApplications(applications);
 
   try {
-    await transporter.sendMail({
+    const mailOptions = {
       from: `"Code Amigo Careers" <${process.env.SMTP_USER}>`,
-      to: NOTIFY_EMAIL,
+      to: NOTIFY_EMAILS,
       replyTo: email,
       subject: `New Job Application - ${jobTitle} - Code Amigo Careers`,
       html: jobApplicationTemplate({ jobTitle, fullName, email, phone, country, countryCode, address, resumeFileName, resumeFileSize, submittedAt }),
-    });
+    };
+
+    if (resumeBase64) {
+      mailOptions.attachments = [{
+        filename: resumeFileName,
+        content: Buffer.from(resumeBase64, 'base64'),
+      }];
+    }
+
+    await transporter.sendMail(mailOptions);
 
     res.json({ success: true });
   } catch (err) {
