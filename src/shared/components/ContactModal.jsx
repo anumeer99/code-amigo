@@ -412,12 +412,13 @@ export default function ContactModal({ open, onClose }) {
         height: { xs: '100vh', md: '78vh' },
         maxHeight: { xs: 'none', md: '78vh' },
         overflow: 'hidden',
+        background: `linear-gradient(160deg, ${hexToRgba(brand.primary, 0.04)} 0%, ${bg.card} 40%, ${bg.light} 100%)`,
       }}>
         {!isMobile && (
           <Box sx={{
             width: '32%', flexShrink: 0,
             borderRight: `1px solid ${border.light}`,
-            background: bg.card,
+            background: 'transparent',
           }}>
             {leftPanel}
           </Box>
@@ -425,7 +426,7 @@ export default function ContactModal({ open, onClose }) {
 
         <Box sx={{
           flex: 1, display: 'flex', flexDirection: 'column',
-          background: theme.custom.glass.bg,
+          background: 'transparent',
           minWidth: 0,
         }}>
           {formPanel}
