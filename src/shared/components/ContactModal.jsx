@@ -17,7 +17,7 @@ import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import PhoneOutlinedIcon from '@mui/icons-material/PhoneOutlined';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+
 import { countries } from '../data/countries';
 import BaseModal from './BaseModal';
 import useForm from '../hooks/useForm';
@@ -173,14 +173,7 @@ export default function ContactModal({ open, onClose }) {
       </Box>
 
       <Box>
-        <ChatIllustration sx={{ mb: 4, height: { xs: 120, md: 160 } }} />
-
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-          <LockOutlinedIcon sx={{ fontSize: 14, color: theme.custom.colors.textMuted }} />
-          <Typography variant="caption" sx={{ color: theme.custom.colors.textMuted, fontSize: theme.custom.fontSize.tiny }}>
-            We'll never spam you or share your information.
-          </Typography>
-        </Box>
+        <ChatIllustration sx={{ height: { xs: 120, md: 160 } }} />
       </Box>
     </Box>
   );
@@ -336,54 +329,38 @@ export default function ContactModal({ open, onClose }) {
         </Box>
 
         <Box sx={{
-          borderTop: `1px solid ${border.light}`,
           p: { xs: 3, md: 4 },
-          display: 'flex', flexDirection: { xs: 'column', md: 'row' },
-          alignItems: 'center', justifyContent: 'space-between', gap: 2,
+          display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: 2,
           flexShrink: 0,
         }}>
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.75, order: { xs: 3, md: 1 } }}>
-            <LockOutlinedIcon sx={{ fontSize: 13, color: theme.custom.colors.textMuted }} />
-            <Typography variant="caption" sx={{ color: theme.custom.colors.textMuted, fontSize: theme.custom.fontSize.tiny }}>
-              We'll never spam you or share your information.
-            </Typography>
-          </Box>
-
-          <Box sx={{
-            display: 'flex', gap: 2, alignItems: 'center',
-            order: { xs: 1, md: 2 },
-            width: { xs: '100%', md: 'auto' },
-            justifyContent: { xs: 'stretch', md: 'flex-end' },
-          }}>
-            <Button
-              variant="text"
-              type="button"
-              onClick={handleClose}
-              disabled={form.submitting}
-              sx={{
-                color: theme.custom.colors.textSecondary,
-                fontWeight: 500, textTransform: 'none',
-                px: 3, py: 1.2,
-                transition: transition.normal,
-                '&:hover': { color: theme.custom.colors.textPrimary, background: hexToRgba(brand.primary, 0.06) },
-              }}
-            >
-              Cancel
-            </Button>
-            <PrimaryButton
-              type="submit"
-              disabled={!form.isFormValid() || form.submitting}
-              loading={form.submitting}
-              sx={{
-                px: { md: 5 }, py: 1.4,
-                width: { xs: '100%', md: 'auto' },
-                borderRadius: radius.md,
-                fontSize: theme.custom.fontSize.bodyMd,
-              }}
-            >
-              Request Consultation
-            </PrimaryButton>
-          </Box>
+          <Button
+            variant="text"
+            type="button"
+            onClick={handleClose}
+            disabled={form.submitting}
+            sx={{
+              color: theme.custom.colors.textSecondary,
+              fontWeight: 500, textTransform: 'none',
+              px: 3, py: 1.2,
+              transition: transition.normal,
+              '&:hover': { color: theme.custom.colors.textPrimary, background: hexToRgba(brand.primary, 0.06) },
+            }}
+          >
+            Cancel
+          </Button>
+          <PrimaryButton
+            type="submit"
+            disabled={!form.isFormValid() || form.submitting}
+            loading={form.submitting}
+            sx={{
+              px: { md: 5 }, py: 1.4,
+              width: { xs: '100%', md: 'auto' },
+              borderRadius: radius.md,
+              fontSize: theme.custom.fontSize.bodyMd,
+            }}
+          >
+            Request Consultation
+          </PrimaryButton>
         </Box>
       </Box>
     </Box>
@@ -428,15 +405,12 @@ export default function ContactModal({ open, onClose }) {
   }
 
   return (
-    <BaseModal open={open} onClose={handleClose} maxWidth={false} fullWidth={false} disableEnforceFocus>
+    <BaseModal open={open} onClose={handleClose} maxWidth="lg" fullWidth disableEnforceFocus>
       <Box sx={{
         display: 'flex',
         flexDirection: { xs: 'column', md: 'row' },
-        width: { xs: '100vw', md: '82vw' },
-        maxWidth: { xs: 'none', md: 1300 },
-        height: { xs: '100vh', md: '82vh' },
-        maxHeight: { xs: 'none', md: '82vh' },
-        borderRadius: { xs: 0, md: radius.xxl },
+        height: { xs: '100vh', md: '78vh' },
+        maxHeight: { xs: 'none', md: '78vh' },
         overflow: 'hidden',
       }}>
         {!isMobile && (
