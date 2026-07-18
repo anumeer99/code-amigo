@@ -1,10 +1,10 @@
 import {
   FaReact, FaNodeJs, FaPython, FaDocker, FaAws, FaAngular,
   FaHtml5, FaBootstrap, FaJava, FaPhp, FaAndroid, FaMicrosoft,
-  FaRobot, FaBrain, FaMicrochip, FaDatabase, FaCogs,
+  FaRobot, FaBrain, FaMicrochip, FaDatabase, FaCogs, FaVuejs,
 } from 'react-icons/fa';
 import {
-  SiNextdotjs, SiTypescript, SiTailwindcss, SiMongodb,
+  SiNextdotjs, SiTypescript, SiJavascript, SiTailwindcss, SiMongodb,
   SiKubernetes, SiTensorflow, SiPytorch, SiFlutter,
   SiSwift, SiKotlin, SiNestjs, SiDjango, SiFastapi,
   SiFlask, SiDotnet, SiSpringboot, SiLaravel, SiExpress,
@@ -43,9 +43,9 @@ export const techCategories = [
       { name: 'React', icon: FaReact },
       { name: 'Next.js', icon: SiNextdotjs },
       { name: 'Angular', icon: FaAngular },
-      { name: 'Vue.js', icon: FaReact },
+      { name: 'Vue.js', icon: FaVuejs },
       { name: 'TypeScript', icon: SiTypescript },
-      { name: 'JavaScript', icon: SiTypescript },
+      { name: 'JavaScript', icon: SiJavascript },
       { name: 'HTML5', icon: FaHtml5 },
       { name: 'Tailwind CSS', icon: SiTailwindcss },
       { name: 'Material UI', icon: SiMui },
