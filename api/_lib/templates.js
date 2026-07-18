@@ -45,7 +45,7 @@ function infoRowLink(label, href, text) {
     </tr>`;
 }
 
-export function consultationRequestTemplate({ fullName, email, phone, country, countryCode, budget, projectDetails, submittedAt }) {
+export function consultationRequestTemplate({ fullName, email, phone, country, countryCode, budget, projectDetails, submittedAt, referenceId }) {
   const dateStr = formatDate(submittedAt);
   const content = `
     <div style="background: linear-gradient(135deg, #8F5C45 0%, #774A37 100%); padding: 32px 32px 28px; text-align: center;">
@@ -53,6 +53,10 @@ export function consultationRequestTemplate({ fullName, email, phone, country, c
       <p style="color: rgba(255,255,255,0.75); margin: 6px 0 0; font-size: 14px;">Code Amigo Website</p>
     </div>
     <div style="padding: 28px 32px 8px;">
+      <p style="color: #374151; margin: 0 0 16px; font-size: 14px; line-height: 1.6;">A new consultation request has been submitted. The complete consultation details are attached as a PDF.</p>
+      <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; padding: 14px 20px; margin-bottom: 20px;">
+        <p style="color: #166534; margin: 0; font-size: 13px; font-weight: 600;">Reference ID: <span style="font-family: monospace; font-size: 14px;">${escapeHtml(referenceId)}</span></p>
+      </div>
       <table style="width: 100%; border-collapse: collapse;">
         ${infoRow('Name', fullName)}
         ${infoRowLink('Email', `mailto:${email}`, email)}
@@ -60,12 +64,6 @@ export function consultationRequestTemplate({ fullName, email, phone, country, c
         ${infoRow('Country', `${country} (${countryCode})`)}
         ${infoRow('Budget', budget)}
       </table>
-    </div>
-    <div style="padding: 0 32px 28px;">
-      <p style="color: #6b7280; font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin: 0 0 10px;">Project Details</p>
-      <div style="background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; padding: 16px 20px;">
-        <p style="color: #374151; margin: 0; font-size: 14px; line-height: 1.7; white-space: pre-wrap; word-wrap: break-word;">${escapeHtml(projectDetails)}</p>
-      </div>
     </div>`;
 
   return wrap(content, 'Submitted via the Code Amigo website contact form.', dateStr);
