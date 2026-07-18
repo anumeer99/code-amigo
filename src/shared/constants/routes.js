@@ -49,7 +49,3 @@ export const ANCHORS = {
   CONTACT: '#contact',
 };
 
-export const API = {
-  SEND_EMAIL: '/api/send-email',
-  APPLY_JOB: '/api/apply-job',
-};

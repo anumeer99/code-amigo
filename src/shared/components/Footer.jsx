@@ -59,7 +59,7 @@ export default function Footer() {
             <Grid container spacing={{ xs: 4, md: 5 }}>
               <Grid item xs={12} sm={6} md={3}>
                 <motion.div {...staggerItem}>
-                  <Typography variant="h6" sx={footerColumnHeadingSx}>
+                  <Typography variant="h6" sx={footerColumnHeadingSx(footer.textPrimary)}>
                     Company
                   </Typography>
                   <Box component="ul" sx={{ listStyle: 'none', p: 0, m: 0 }}>
@@ -87,7 +87,7 @@ export default function Footer() {
 
               <Grid item xs={12} sm={6} md={3}>
                 <motion.div {...staggerItem}>
-                  <Typography variant="h6" sx={footerColumnHeadingSx}>
+                  <Typography variant="h6" sx={footerColumnHeadingSx(footer.textPrimary)}>
                     Services
                   </Typography>
                   <Box component="ul" sx={{ listStyle: 'none', p: 0, m: 0 }}>
@@ -124,7 +124,7 @@ export default function Footer() {
 
               <Grid item xs={12} sm={6} md={3}>
                 <motion.div {...staggerItem}>
-                  <Typography variant="h6" sx={footerColumnHeadingSx}>
+                  <Typography variant="h6" sx={footerColumnHeadingSx(footer.textPrimary)}>
                     Contact
                   </Typography>
                   <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5, mb: 3 }}>
@@ -177,7 +177,7 @@ export default function Footer() {
 
               <Grid item xs={12} sm={6} md={3}>
                 <motion.div {...staggerItem}>
-                  <Typography variant="h6" sx={footerColumnHeadingSx}>
+                  <Typography variant="h6" sx={footerColumnHeadingSx(footer.textPrimary)}>
                     Stay Updated
                   </Typography>
                   <Typography variant="body2" sx={{ color: footer.textSecondary, mb: 2, fontSize: fontSize.med }}>

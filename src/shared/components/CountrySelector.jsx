@@ -200,7 +200,7 @@ export default function CountrySelector({ value, onChange, error, touched, usePo
   );
 
   return (
-    <Box sx={{ position: 'relative', width: 160, flexShrink: 0 }}>
+    <Box sx={{ position: 'relative', width: { xs: 110, md: 160 }, flexShrink: 0 }}>
       <Button
         ref={buttonRef}
         variant="outlined"

@@ -2,26 +2,31 @@ import { Dialog, DialogContent, Box } from '@mui/material';
 import { useTheme } from '@mui/material';
 import { hiddenScrollbarSx } from '../styles/sectionStyles';
 
-export default function BaseModal({ open, onClose, maxWidth = 'sm', fullWidth = true, children, disableEnforceFocus }) {
+export default function BaseModal({ open, onClose, maxWidth = 'sm', fullWidth = true, children, disableEnforceFocus, contentSized }) {
   const theme = useTheme();
+  const isEdge = maxWidth === false;
+  const auto = isEdge || contentSized;
 
   return (
     <Dialog
       open={open}
       onClose={onClose}
       maxWidth={maxWidth}
-      fullWidth={fullWidth}
+      fullWidth={contentSized ? false : fullWidth}
       disableEnforceFocus={disableEnforceFocus}
       PaperProps={{
         sx: {
-          borderRadius: maxWidth === false ? 0 : theme.custom.radius.xxl,
-          background: theme.custom.glass.bg,
-          backdropFilter: theme.custom.glass.blur,
-          border: maxWidth === false ? 'none' : `1px solid ${theme.custom.glass.border}`,
-          boxShadow: maxWidth === false ? 'none' : theme.custom.shadow.modal,
-          m: maxWidth === false ? 0 : 2,
-          maxHeight: maxWidth === false ? 'none' : 'calc(100vh - 32px)',
-          overflow: 'hidden',
+          borderRadius: auto ? 0 : theme.custom.radius.xxl,
+          background: auto ? 'transparent' : theme.custom.glass.bg,
+          backdropFilter: auto ? 'none' : theme.custom.glass.blur,
+          border: auto ? 'none' : `1px solid ${theme.custom.glass.border}`,
+          boxShadow: auto ? 'none' : theme.custom.shadow.modal,
+          m: auto ? 0 : 2,
+          maxHeight: auto ? 'none' : { xs: '85vh', md: 'calc(100vh - 64px)' },
+          overflow: auto ? 'visible' : 'hidden',
+          width: contentSized ? 'auto' : undefined,
+          minWidth: contentSized ? { xs: 'calc(100vw - 32px)', sm: 380 } : undefined,
+          maxWidth: contentSized ? { xs: 'calc(100vw - 32px)', sm: 480 } : undefined,
         },
       }}
       slotProps={{
@@ -31,7 +36,12 @@ export default function BaseModal({ open, onClose, maxWidth = 'sm', fullWidth = 
       }}
     >
       <DialogContent sx={{ p: 0, overflow: 'visible', ...hiddenScrollbarSx }}>
-        <Box sx={{ maxHeight: maxWidth === false ? 'none' : 'calc(100vh - 64px)', overflowY: 'auto', ...hiddenScrollbarSx }}>
+        <Box sx={{
+          height: auto ? 'auto' : { xs: '85vh', md: 'calc(100vh - 64px)' },
+          display: 'flex',
+          flexDirection: 'column',
+          overflow: auto ? 'visible' : 'hidden',
+        }}>
           {children}
         </Box>
       </DialogContent>

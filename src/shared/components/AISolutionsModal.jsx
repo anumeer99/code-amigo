@@ -35,7 +35,7 @@ export default function AISolutionsModal({ open, onClose }) {
 
   return (
     <BaseModal open={open} onClose={onClose} maxWidth="md" fullWidth>
-      <Box sx={{ display: 'flex', flexDirection: 'column', maxHeight: 'calc(100vh - 64px)' }}>
+      <Box sx={{ flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column' }}>
         <Box
           sx={{
             position: 'sticky',

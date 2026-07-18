@@ -127,9 +127,11 @@ export const hiddenScrollbarSx = {
   msOverflowStyle: 'none',
 };
 
-export const footerColumnHeadingSx = {
-  color: 'var(--color-text-primary)',
-  mb: 2.5,
-  fontSize: '0.95rem',
-  fontWeight: 600,
-};
+export function footerColumnHeadingSx(color) {
+  return {
+    color,
+    mb: 2.5,
+    fontSize: '0.95rem',
+    fontWeight: 600,
+  };
+}

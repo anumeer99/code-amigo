@@ -1,30 +1,63 @@
-import { API } from '../constants/routes';
+const API_BASE = '/api';
 
 export async function sendEmail(payload) {
-  const res = await fetch(API.SEND_EMAIL, {
+  const { fullName, email, phone, country, countryCode, budget, projectDetails, submittedAt } = payload;
+
+  const res = await fetch(`${API_BASE}/send-email`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload),
+    body: JSON.stringify({
+      fullName: fullName.trim(),
+      email: email.trim(),
+      phone: `${countryCode || ''} ${phone}`.trim(),
+      country: country || '',
+      countryCode: countryCode || '',
+      budget: budget || 'Not specified',
+      projectDetails: projectDetails.trim(),
+      submittedAt: submittedAt || new Date().toISOString(),
+    }),
   });
 
-  if (!res.ok) {
-    throw new Error('Failed to send email');
+  const data = await res.json().catch(() => null);
+
+  if (!res.ok || !data?.success) {
+    console.error('sendEmail error:', data);
+    throw new Error(data?.error || 'Failed to send message. Please try again.');
   }
 
-  return res.json();
+  return data;
 }
 
 export async function applyJob(payload) {
-  const res = await fetch(API.APPLY_JOB, {
+  const {
+    jobTitle, fullName, email, phone,
+    country, countryCode, address, resumeFileName,
+    resumeFileSize, resumeBase64, submittedAt,
+  } = payload;
+
+  const res = await fetch(`${API_BASE}/apply-job`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload),
+    body: JSON.stringify({
+      jobTitle: jobTitle || '',
+      fullName: fullName.trim(),
+      email: email.trim(),
+      phone: `${countryCode || ''} ${phone}`.trim(),
+      country: country || '',
+      countryCode: countryCode || '',
+      address: address || '',
+      resumeFileName: resumeFileName || '',
+      resumeFileSize: resumeFileSize || 0,
+      resumeBase64: resumeBase64 || '',
+      submittedAt: submittedAt || new Date().toISOString(),
+    }),
   });
 
-  const data = await res.json();
+  const data = await res.json().catch(() => null);
 
-  if (!res.ok) {
-    const error = new Error(data.error || data.message || 'Failed to submit application');
+  if (!res.ok || !data?.success) {
+    console.error('applyJob error:', data);
+    const error = new Error(data?.error || 'Failed to submit application. Please try again.');
     error.status = res.status;
     error.data = data;
     throw error;

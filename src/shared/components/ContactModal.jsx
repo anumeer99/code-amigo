@@ -178,228 +178,242 @@ export default function ContactModal({ open, onClose }) {
     </Box>
   );
 
-  const formPanel = (
-    <Box sx={{
-      display: 'flex', flexDirection: 'column', height: '100%',
-    }}>
-      {isMobile && (
-        <Box sx={{ px: 3, pt: 4, pb: 1 }}>
-          <Typography
-            variant="h1"
-            sx={{
-              fontFamily: theme.typography.h1.fontFamily,
-              fontWeight: 800, fontSize: '2rem',
-              lineHeight: 1.15, letterSpacing: '-0.02em',
-              color: theme.custom.colors.textPrimary, mb: 1.5,
-            }}
-          >
-            Get a Free Consultation
-          </Typography>
-          <Box sx={{
-            display: 'inline-flex', alignItems: 'center', gap: 0.75,
-            px: 1.75, py: 0.75, borderRadius: radius.pill,
-            background: hexToRgba(brand.primary, 0.1),
-            border: `1px solid ${hexToRgba(brand.primary, 0.2)}`,
-            mb: 2,
-          }}>
-            <AccessTimeIcon sx={{ fontSize: 14, color: brand.primary }} />
-            <Typography variant="caption" sx={{ fontWeight: 600, color: brand.primary, fontSize: theme.custom.fontSize.small }}>
-              30-second form
-            </Typography>
-          </Box>
-          <Typography variant="body1" sx={{ color: theme.custom.colors.textSecondary, lineHeight: 1.7, fontSize: '1rem', mb: 1 }}>
-            Tell us about your project and we'll get back to you with the best solution for your business.
-          </Typography>
+  const formFields = (
+    <>
+      <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' }, gap: { xs: 2.5, md: 2 }, mb: 2 }}>
+        <Box>
+          <FormFieldLabel icon={PersonOutlineIcon} text="Full Name" />
+          <FormName
+            value={form.formData.fullName}
+            onChange={(e) => form.handleChange('fullName', e.target.value)}
+            onBlur={() => form.handleBlur('fullName')}
+            error={form.errors.fullName}
+            touched={form.touched.fullName}
+          />
         </Box>
-      )}
+        <Box>
+          <FormFieldLabel icon={EmailOutlinedIcon} text="Email Address" />
+          <FormEmail
+            value={form.formData.email}
+            onChange={(e) => form.handleChange('email', e.target.value)}
+            onBlur={() => form.handleBlur('email')}
+            error={form.errors.email}
+            touched={form.touched.email}
+          />
+        </Box>
+      </Box>
 
-      <Box component="form" onSubmit={form.handleSubmit} noValidate sx={{ flex: 1, display: 'flex', flexDirection: 'column', minHeight: 0 }}>
-        <Box sx={{
-          flex: 1, overflowY: 'auto', p: { xs: 3, md: 5 },
-          pt: isMobile ? 1 : 5, ...hiddenScrollbarSx,
-        }}>
-          {!isMobile && <Box sx={{ mb: 3.5 }} />}
+      <Box sx={{ mb: 2 }}>
+        <FormFieldLabel icon={PhoneOutlinedIcon} text="Phone Number" />
+        <FormPhone
+          value={form.formData.phone}
+          onChange={(e) => form.handlePhoneChange(e.target.value)}
+          onPaste={(e) => form.handlePhonePaste(e, form.formData.phone)}
+          onBlur={() => form.handleBlur('phone')}
+          error={form.errors.phone}
+          touched={form.touched.phone}
+          country={form.formData.country}
+          onCountryChange={(code) => form.handleChange('country', code)}
+          countryError={form.errors.phone}
+          countryTouched={form.touched.phone}
+          buttonRef={countryButtonRef}
+          sx={{ mb: 0 }}
+        />
+      </Box>
 
-          <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' }, gap: 2, mb: 0.5 }}>
-            <Box>
-              <FormFieldLabel icon={PersonOutlineIcon} text="Full Name" />
-              <FormName
-                value={form.formData.fullName}
-                onChange={(e) => form.handleChange('fullName', e.target.value)}
-                onBlur={() => form.handleBlur('fullName')}
-                error={form.errors.fullName}
-                touched={form.touched.fullName}
-              />
-            </Box>
-            <Box>
-              <FormFieldLabel icon={EmailOutlinedIcon} text="Email Address" />
-              <FormEmail
-                value={form.formData.email}
-                onChange={(e) => form.handleChange('email', e.target.value)}
-                onBlur={() => form.handleBlur('email')}
-                error={form.errors.email}
-                touched={form.touched.email}
-              />
-            </Box>
-          </Box>
-
-          <Box sx={{ mb: 0.5 }}>
-            <FormFieldLabel icon={PhoneOutlinedIcon} text="Phone Number" />
-            <FormPhone
-              value={form.formData.phone}
-              onChange={(e) => form.handlePhoneChange(e.target.value)}
-              onPaste={(e) => form.handlePhonePaste(e, form.formData.phone)}
-              onBlur={() => form.handleBlur('phone')}
-              error={form.errors.phone}
-              touched={form.touched.phone}
-              country={form.formData.country}
-              onCountryChange={(code) => form.handleChange('country', code)}
-              countryError={form.errors.phone}
-              countryTouched={form.touched.phone}
-              buttonRef={countryButtonRef}
-            />
-          </Box>
-
-          <Box sx={{ mb: 0.5 }}>
-            <FormFieldLabel icon={AttachMoneyIcon} text="Budget" />
-            <FormControl fullWidth>
-              <Select
-                value={form.formData.budget}
-                displayEmpty
-                onChange={(e) => form.handleChange('budget', e.target.value)}
-                sx={{
+      <Box sx={{ mb: 2 }}>
+        <FormFieldLabel icon={AttachMoneyIcon} text="Budget" />
+        <FormControl fullWidth>
+          <Select
+            value={form.formData.budget}
+            displayEmpty
+            onChange={(e) => form.handleChange('budget', e.target.value)}
+            sx={{
+              borderRadius: radius.xl,
+              background: bg.input,
+              color: form.formData.budget ? theme.custom.colors.textPrimary : theme.custom.colors.textMuted,
+              fontSize: theme.custom.fontSize.bodyMd,
+              height: 56,
+              '& .MuiOutlinedInput-notchedOutline': { borderColor: border.light },
+              '&:hover .MuiOutlinedInput-notchedOutline': { borderColor: border.default },
+              '&.Mui-focused .MuiOutlinedInput-notchedOutline': { borderColor: brand.primary },
+            }}
+            MenuProps={{
+              PaperProps: {
+                sx: {
+                  background: theme.custom.bg.card,
+                  border: `1px solid ${border.light}`,
                   borderRadius: radius.xl,
-                  background: bg.input,
-                  color: form.formData.budget ? theme.custom.colors.textPrimary : theme.custom.colors.textMuted,
-                  fontSize: theme.custom.fontSize.bodyMd,
-                  height: 56,
-                  '& .MuiOutlinedInput-notchedOutline': { borderColor: border.light },
-                  '&:hover .MuiOutlinedInput-notchedOutline': { borderColor: border.default },
-                  '&.Mui-focused .MuiOutlinedInput-notchedOutline': { borderColor: brand.primary },
-                }}
-                MenuProps={{
-                  PaperProps: {
-                    sx: {
-                      background: theme.custom.bg.card,
-                      border: `1px solid ${border.light}`,
-                      borderRadius: radius.xl,
-                      boxShadow: shadow.brandLight,
-                      '& .MuiMenuItem-root': {
-                        fontSize: theme.custom.fontSize.body,
-                        color: theme.custom.colors.textSecondary,
-                        py: 1.2,
-                        '&:hover': { background: hexToRgba(brand.primary, 0.06) },
-                        '&.Mui-selected': {
-                          background: hexToRgba(brand.primary, 0.1),
-                          '&:hover': { background: hexToRgba(brand.primary, 0.15) },
-                        },
-                      },
+                  boxShadow: shadow.brandLight,
+                  '& .MuiMenuItem-root': {
+                    fontSize: theme.custom.fontSize.body,
+                    color: theme.custom.colors.textSecondary,
+                    py: 1.2,
+                    '&:hover': { background: hexToRgba(brand.primary, 0.06) },
+                    '&.Mui-selected': {
+                      background: hexToRgba(brand.primary, 0.1),
+                      '&:hover': { background: hexToRgba(brand.primary, 0.15) },
                     },
                   },
-                }}
-              >
-                {budgetOptions.map((opt) => (
-                  <MenuItem key={opt} value={opt}>{opt}</MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </Box>
+                },
+              },
+            }}
+          >
+            {budgetOptions.map((opt) => (
+              <MenuItem key={opt} value={opt}>{opt}</MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      </Box>
 
-          <Box sx={{ mb: 1 }}>
-            <FormFieldLabel icon={ChatBubbleOutlineIcon} text="Project Details" />
-            <FormTextarea
-              label=""
-              value={form.formData.projectDetails}
-              onChange={(e) => form.handleChange('projectDetails', e.target.value)}
-              onBlur={() => form.handleBlur('projectDetails')}
-              error={form.errors.projectDetails}
-              touched={form.touched.projectDetails}
-              rows={5}
-              maxLength={2000}
-              showCount
-              sx={{ mb: 0 }}
-            />
-          </Box>
+      <Box sx={{ mb: 2 }}>
+        <FormFieldLabel icon={ChatBubbleOutlineIcon} text="Project Details" />
+        <FormTextarea
+          label=""
+          value={form.formData.projectDetails}
+          onChange={(e) => form.handleChange('projectDetails', e.target.value)}
+          onBlur={() => form.handleBlur('projectDetails')}
+          error={form.errors.projectDetails}
+          touched={form.touched.projectDetails}
+          rows={isMobile ? 4 : 5}
+          maxLength={2000}
+          showCount
+          sx={{ mb: 0 }}
+        />
+      </Box>
 
-          {form.submitError && (
-            <Typography variant="body2" sx={{ color: accent.error, mb: 2, textAlign: 'center' }}>
-              {form.submitError}
-            </Typography>
-          )}
-        </Box>
+      {form.submitError && (
+        <Typography variant="body2" sx={{ color: accent.error, mb: 2, textAlign: 'center' }}>
+          {form.submitError}
+        </Typography>
+      )}
+    </>
+  );
 
+  const formActions = (
+    <Box sx={{
+      px: { xs: 3, md: 5 }, py: { xs: 2.5, md: 4 },
+      display: 'flex', flexDirection: { xs: 'column', md: 'row' },
+      alignItems: 'center', gap: { xs: 1.5, md: 2 },
+    }}>
+      <PrimaryButton
+        type="submit"
+        disabled={!form.isFormValid() || form.submitting}
+        loading={form.submitting}
+        sx={{
+          px: { md: 5 }, py: 1.4,
+          width: '100%',
+          minWidth: 0,
+          borderRadius: radius.md,
+          fontSize: theme.custom.fontSize.bodyMd,
+        }}
+      >
+        Request Consultation
+      </PrimaryButton>
+      <Button
+        variant="text"
+        type="button"
+        onClick={handleClose}
+        disabled={form.submitting}
+        sx={{
+          color: theme.custom.colors.textSecondary,
+          fontWeight: 500, textTransform: 'none',
+          px: 3, py: 1.2,
+          transition: transition.normal,
+          '&:hover': { color: theme.custom.colors.textPrimary, background: hexToRgba(brand.primary, 0.06) },
+        }}
+      >
+        Cancel
+      </Button>
+    </Box>
+  );
+
+  const formPanel = isMobile ? (
+    <Box sx={{ flex: 1, minHeight: 0, overflowY: 'auto', ...hiddenScrollbarSx }}>
+      <Box sx={{ px: 3, pt: 4, pb: 1 }}>
+        <Typography
+          variant="h1"
+          sx={{
+            fontFamily: theme.typography.h1.fontFamily,
+            fontWeight: 800, fontSize: '1.75rem',
+            lineHeight: 1.15, letterSpacing: '-0.02em',
+            color: theme.custom.colors.textPrimary, mb: 1.5,
+          }}
+        >
+          Get a Free Consultation
+        </Typography>
         <Box sx={{
-          p: { xs: 3, md: 4 },
-          display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: 2,
-          flexShrink: 0,
+          display: 'inline-flex', alignItems: 'center', gap: 0.75,
+          px: 1.75, py: 0.75, borderRadius: radius.pill,
+          background: hexToRgba(brand.primary, 0.1),
+          border: `1px solid ${hexToRgba(brand.primary, 0.2)}`,
+          mb: 2,
         }}>
-          <Button
-            variant="text"
-            type="button"
-            onClick={handleClose}
-            disabled={form.submitting}
-            sx={{
-              color: theme.custom.colors.textSecondary,
-              fontWeight: 500, textTransform: 'none',
-              px: 3, py: 1.2,
-              transition: transition.normal,
-              '&:hover': { color: theme.custom.colors.textPrimary, background: hexToRgba(brand.primary, 0.06) },
-            }}
-          >
-            Cancel
-          </Button>
-          <PrimaryButton
-            type="submit"
-            disabled={!form.isFormValid() || form.submitting}
-            loading={form.submitting}
-            sx={{
-              px: { md: 5 }, py: 1.4,
-              width: { xs: '100%', md: 'auto' },
-              borderRadius: radius.md,
-              fontSize: theme.custom.fontSize.bodyMd,
-            }}
-          >
-            Request Consultation
-          </PrimaryButton>
+          <AccessTimeIcon sx={{ fontSize: 14, color: brand.primary }} />
+          <Typography variant="caption" sx={{ fontWeight: 600, color: brand.primary, fontSize: theme.custom.fontSize.small }}>
+            30-second form
+          </Typography>
         </Box>
+        <Typography variant="body1" sx={{ color: theme.custom.colors.textSecondary, lineHeight: 1.7, fontSize: '0.95rem', mb: 1 }}>
+          Tell us about your project and we'll get back to you with the best solution for your business.
+        </Typography>
+      </Box>
+      <Box component="form" onSubmit={form.handleSubmit} noValidate sx={{ px: 3, pb: 3 }}>
+        {formFields}
+        {formActions}
+      </Box>
+    </Box>
+  ) : (
+    <Box sx={{ flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column' }}>
+      <Box sx={{ flex: 1, minHeight: 0, overflowY: 'auto', px: 5, pt: 5, pb: 5, ...hiddenScrollbarSx }}>
+        <Box sx={{ mb: 3.5 }} />
+        {formFields}
+      </Box>
+      <Box component="form" onSubmit={form.handleSubmit} noValidate sx={{ flexShrink: 0 }}>
+        {formActions}
       </Box>
     </Box>
   );
 
   if (form.submitted) {
     return (
-      <BaseModal open={open} onClose={handleClose} maxWidth="sm" fullWidth>
-        <Box sx={{ display: 'flex', flexDirection: 'column', maxHeight: 'calc(100vh - 64px)' }}>
-          <Box sx={{ flex: 1, overflowY: 'auto', p: { xs: 3, sm: 4 }, ...hiddenScrollbarSx }}>
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.3 }}
+      <BaseModal open={open} onClose={handleClose} contentSized>
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.3 }}
+        >
+          <Box sx={{ textAlign: 'center', px: { xs: 4, sm: 5 }, py: { xs: 4, sm: 5 } }}>
+            <Box
+              sx={{
+                width: 56, height: 56,
+                borderRadius: radius.full,
+                background: hexToRgba(accent.success, 0.1),
+                border: `2px solid ${hexToRgba(accent.success, 0.25)}`,
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                mx: 'auto', mb: 2.5,
+              }}
             >
-              <Box sx={{ textAlign: 'center', py: 4 }}>
-                <Box
-                  sx={{
-                    width: 64, height: 64,
-                    borderRadius: radius.full,
-                    background: hexToRgba(accent.success, 0.1),
-                    border: `2px solid ${hexToRgba(accent.success, 0.25)}`,
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    mx: 'auto', mb: 3,
-                  }}
-                >
-                  <Typography sx={{ fontSize: '1.8rem', color: accent.success }}>✓</Typography>
-                </Box>
-                <Typography variant="h5" sx={{ color: theme.custom.colors.textPrimary, mb: 1.5, fontWeight: 600 }}>
-                  Request Submitted!
-                </Typography>
-                <Typography variant="body1" sx={{ color: theme.custom.colors.textSecondary, mb: 4 }}>
-                  Thank you for reaching out. We'll get back to you within 24 hours.
-                </Typography>
-                <PrimaryButton onClick={handleClose} sx={{ px: 4 }}>Done</PrimaryButton>
-              </Box>
-            </motion.div>
+              <Typography sx={{ fontSize: '1.6rem', color: accent.success }}>✓</Typography>
+            </Box>
+            <Typography variant="h5" sx={{
+              color: theme.custom.colors.textPrimary, mb: 1, fontWeight: 600,
+              fontSize: { xs: '1.25rem', sm: '1.4rem' },
+            }}>
+              Request Submitted!
+            </Typography>
+            <Typography variant="body1" sx={{
+              color: theme.custom.colors.textSecondary, mb: 3,
+              fontSize: theme.custom.fontSize.bodyMd, lineHeight: 1.6,
+            }}>
+              Thank you for reaching out.<br />
+              We'll get back to you within 24 hours.
+            </Typography>
+            <PrimaryButton onClick={handleClose} sx={{ px: 5, py: 1.3 }}>
+              Done
+            </PrimaryButton>
           </Box>
-        </Box>
+        </motion.div>
       </BaseModal>
     );
   }
@@ -407,10 +421,10 @@ export default function ContactModal({ open, onClose }) {
   return (
     <BaseModal open={open} onClose={handleClose} maxWidth="lg" fullWidth disableEnforceFocus>
       <Box sx={{
+        flex: 1,
+        minHeight: 0,
         display: 'flex',
         flexDirection: { xs: 'column', md: 'row' },
-        height: { xs: '100vh', md: '78vh' },
-        maxHeight: { xs: 'none', md: '78vh' },
         overflow: 'hidden',
         background: `linear-gradient(160deg, ${hexToRgba(brand.primary, 0.04)} 0%, ${bg.card} 40%, ${bg.light} 100%)`,
       }}>
@@ -425,7 +439,7 @@ export default function ContactModal({ open, onClose }) {
         )}
 
         <Box sx={{
-          flex: 1, display: 'flex', flexDirection: 'column',
+          flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column',
           background: 'transparent',
           minWidth: 0,
         }}>
