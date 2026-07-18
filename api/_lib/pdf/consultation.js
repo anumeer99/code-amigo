@@ -1,6 +1,7 @@
 import {
   createDocument, drawHeader, drawSectionTitle, drawInfoGrid,
   drawBlockText, drawFooter, generateReferenceId, formatDatePKT, formatTimePKT,
+  formatDisplayPhone,
 } from './generator.js';
 
 function sanitizeFileName(name) {
@@ -41,7 +42,7 @@ export function generateConsultationPDF(data) {
   drawInfoGrid(doc, [
     { label: 'Full Name', value: fullName },
     { label: 'Email Address', value: email },
-    { label: 'Phone Number', value: phone ? `${dial || ''} ${phone}`.trim() : '—' },
+    { label: 'Phone Number', value: formatDisplayPhone(phone, dial) },
     { label: 'Country', value: country },
     { label: 'Budget', value: budget || 'Not specified' },
   ]);

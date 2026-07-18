@@ -11,7 +11,15 @@ const BRAND = {
   white: '#ffffff',
 };
 
-function generateReferenceId() {
+export function formatDisplayPhone(phone, dial) {
+  if (!phone) return '—';
+  const digits = phone.replace(/[^0-9]/g, '');
+  if (!digits) return '—';
+  if (dial) return `${dial} ${digits}`;
+  return `+${digits}`;
+}
+
+export function generateReferenceId() {
   const now = new Date();
   const date = now.toISOString().slice(0, 10).replace(/-/g, '');
   const rand = Math.floor(100000 + Math.random() * 900000);
@@ -180,4 +188,4 @@ export function drawFooter(doc) {
   }
 }
 
-export { generateReferenceId, formatDatePKT, formatTimePKT, BRAND };
+export { generateReferenceId, formatDatePKT, formatTimePKT, BRAND, formatDisplayPhone };

@@ -1,3 +1,11 @@
+function formatPhoneDisplay(phone, dial) {
+  if (!phone) return '—';
+  const digits = phone.replace(/[^0-9]/g, '');
+  if (!digits) return '—';
+  if (dial) return `${dial} ${digits}`;
+  return `+${digits}`;
+}
+
 function formatDate(dateStr) {
   const date = dateStr ? new Date(dateStr) : new Date();
   return date.toLocaleString('en-US', {
@@ -60,7 +68,7 @@ export function consultationRequestTemplate({ fullName, email, phone, dial, coun
       <table style="width: 100%; border-collapse: collapse;">
         ${infoRow('Name', fullName)}
         ${infoRowLink('Email', `mailto:${email}`, email)}
-        ${infoRow('Phone', phone ? `${dial || ''} ${phone}`.trim() : '—')}
+        ${infoRow('Phone', formatPhoneDisplay(phone, dial))}
         ${infoRow('Country', `${country} (${countryCode})`)}
         ${infoRow('Budget', budget)}
       </table>
