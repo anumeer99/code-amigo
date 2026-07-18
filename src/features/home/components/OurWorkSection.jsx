@@ -1,5 +1,5 @@
-import { useRef, useState, useEffect } from 'react';
-import { Box, Container, Grid, Typography, Rating, Avatar, useTheme } from '@mui/material';
+import { useState, useRef, useCallback } from 'react';
+import { Box, Container, Typography, Rating, Avatar, useTheme } from '@mui/material';
 import { useInView } from 'framer-motion';
 import SectionHeader from '../../../shared/components/SectionHeader';
 import { sectionWrapperSx, gradientDividerSx, cardBaseSx, cardHoverSx } from '../../../shared/styles/sectionStyles';
@@ -10,23 +10,104 @@ function resolveColor(theme, colorPath) {
   return theme.custom[group]?.[key] ?? colorPath;
 }
 
+const CARD_WIDTH = { xs: 300, sm: 340, md: 360, lg: 380 };
+const CARD_GAP = 24;
+const SCROLL_DURATION = 40;
+
+function TestimonialCard({ item, theme, hoverSx }) {
+  const avatarHex = resolveColor(theme, item.avatarColor);
+
+  return (
+    <Box
+      sx={{
+        ...cardBaseSx,
+        width: CARD_WIDTH,
+        minWidth: CARD_WIDTH,
+        height: 340,
+        display: 'flex',
+        flexDirection: 'column',
+        flexShrink: 0,
+        '&:hover': {
+          ...hoverSx['&:hover'],
+          transform: 'scale(1.03) translateY(-4px)',
+        },
+      }}
+    >
+      <Rating
+        value={item.rating}
+        readOnly
+        size="small"
+        sx={{
+          mb: 2.5,
+          '& .MuiRating-iconFilled': { color: theme.custom.accent.amber },
+          '& .MuiRating-iconEmpty': { color: theme.custom.colors.textMuted },
+        }}
+      />
+
+      <Typography
+        variant="body2"
+        sx={{
+          mb: 3,
+          lineHeight: 1.8,
+          flex: 1,
+          fontSize: theme.custom.fontSize.body,
+          fontStyle: 'italic',
+          overflow: 'hidden',
+          display: '-webkit-box',
+          WebkitLineClamp: 4,
+          WebkitBoxOrient: 'vertical',
+          color: theme.custom.colors.textSecondary,
+        }}
+      >
+        "{item.testimonial}"
+      </Typography>
+
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mt: 'auto' }}>
+        <Avatar
+          sx={{
+            width: 48,
+            height: 48,
+            borderRadius: theme.custom.radius.md,
+            background: theme.custom.hexToRgba(avatarHex, 0.15),
+            color: avatarHex,
+            fontWeight: 700,
+            fontSize: theme.custom.fontSize.body,
+          }}
+        >
+          {item.initials}
+        </Avatar>
+        <Box>
+          <Typography variant="subtitle2" sx={{ color: theme.custom.colors.textPrimary, fontWeight: 600, fontSize: theme.custom.fontSize.body }}>
+            {item.name}
+          </Typography>
+          <Typography variant="caption" sx={{ color: theme.custom.colors.textMuted, fontSize: theme.custom.fontSize.label }}>
+            {item.position}, {item.company}
+          </Typography>
+        </Box>
+      </Box>
+    </Box>
+  );
+}
+
 export default function OurWorkSection() {
   const theme = useTheme();
-  const gridRef = useRef(null);
-  const isInView = useInView(gridRef, { once: true, margin: '-50px' });
-  const [entered, setEntered] = useState(false);
-
-  useEffect(() => {
-    if (isInView) {
-      const timer = setTimeout(() => setEntered(true), 700);
-      return () => clearTimeout(timer);
-    }
-  }, [isInView]);
+  const sectionRef = useRef(null);
+  const isInView = useInView(sectionRef, { once: true, margin: '-50px' });
+  const [isPaused, setIsPaused] = useState(false);
 
   const hoverSx = cardHoverSx(theme.custom.brand.primary);
 
+  const handleMouseEnter = useCallback(() => setIsPaused(true), []);
+  const handleMouseLeave = useCallback(() => setIsPaused(false), []);
+
+  const duplicated = [...testimonials, ...testimonials];
+
   return (
-    <Box id="portfolio" sx={{ ...sectionWrapperSx, background: theme.custom.bg.sections.lavender }}>
+    <Box
+      id="portfolio"
+      ref={sectionRef}
+      sx={{ ...sectionWrapperSx, background: theme.custom.bg.sections.lavender }}
+    >
       <Box sx={gradientDividerSx} />
 
       <Container maxWidth="xl">
@@ -37,87 +118,57 @@ export default function OurWorkSection() {
           color={theme.custom.brand.primary}
         />
 
-        <Box ref={gridRef}>
-          <Grid container spacing={3}>
-            {testimonials.map((item, index) => {
-              const avatarHex = resolveColor(theme, item.avatarColor);
-              return (
-              <Grid item xs={12} md={6} lg={4} key={item.name}>
-                  <Box
-                    sx={{
-                      ...cardBaseSx,
-                      ...hoverSx,
-                      height: 340,
-                      display: 'flex',
-                      flexDirection: 'column',
-                      opacity: isInView ? 1 : 0,
-                      transform: isInView ? 'translateY(0)' : 'translateY(30px)',
-                      transition: entered
-                        ? 'transform 0.2s ease, box-shadow 0.3s ease, border-color 0.3s ease, background 0.3s ease'
-                        : `opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1) ${index * 0.1}s, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1) ${index * 0.1}s, box-shadow 0.3s ease, border-color 0.3s ease, background 0.3s ease`,
-                      '&:hover': {
-                        ...hoverSx['&:hover'],
-                        transform: 'scale(1.03) translateY(-4px)',
-                      },
-                    }}
-                  >
-                    <Rating
-                      value={item.rating}
-                      readOnly
-                      size="small"
-                      sx={{
-                        mb: 2.5,
-                        '& .MuiRating-iconFilled': { color: theme.custom.accent.amber },
-                        '& .MuiRating-iconEmpty': { color: theme.custom.colors.textMuted },
-                      }}
-                    />
-
-                    <Typography
-                      variant="body2"
-                      sx={{
-                        mb: 3,
-                        lineHeight: 1.8,
-                        flex: 1,
-                        fontSize: theme.custom.fontSize.body,
-                        fontStyle: 'italic',
-                        overflow: 'hidden',
-                        display: '-webkit-box',
-                        WebkitLineClamp: 4,
-                        WebkitBoxOrient: 'vertical',
-                        color: theme.custom.colors.textSecondary,
-                      }}
-                    >
-                      "{item.testimonial}"
-                    </Typography>
-
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mt: 'auto' }}>
-                      <Avatar
-                        sx={{
-                          width: 48,
-                          height: 48,
-                          borderRadius: theme.custom.radius.md,
-                          background: theme.custom.hexToRgba(avatarHex, 0.15),
-                          color: avatarHex,
-                          fontWeight: 700,
-                          fontSize: theme.custom.fontSize.body,
-                        }}
-                      >
-                        {item.initials}
-                      </Avatar>
-                      <Box>
-                        <Typography variant="subtitle2" sx={{ color: theme.custom.colors.textPrimary, fontWeight: 600, fontSize: theme.custom.fontSize.body }}>
-                          {item.name}
-                        </Typography>
-                        <Typography variant="caption" sx={{ color: theme.custom.colors.textMuted, fontSize: theme.custom.fontSize.label }}>
-                          {item.position}, {item.company}
-                        </Typography>
-                      </Box>
-                    </Box>
-                  </Box>
-              </Grid>
-              );
-            })}
-          </Grid>
+        <Box
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+          onTouchStart={handleMouseEnter}
+          onTouchEnd={handleMouseLeave}
+          sx={{
+            overflow: 'hidden',
+            width: '100vw',
+            marginLeft: 'calc(-50vw + 50%)',
+            marginRight: 'calc(-50vw + 50%)',
+            '@keyframes testimonialScroll': {
+              '0%': { transform: 'translateX(0)' },
+              '100%': { transform: 'translateX(-50%)' },
+            },
+            '@media (prefers-reduced-motion: reduce)': {
+              overflowX: 'auto',
+              WebkitOverflowScrolling: 'touch',
+              '& > div': {
+                animationPlayState: 'paused !important',
+              },
+              '&::-webkit-scrollbar': { display: 'none' },
+              scrollbarWidth: 'none',
+              msOverflowStyle: 'none',
+            },
+          }}
+        >
+          <Box
+            sx={{
+              display: 'flex',
+              gap: `${CARD_GAP}px`,
+              width: 'max-content',
+              animation: `testimonialScroll ${SCROLL_DURATION}s linear infinite`,
+              animationPlayState: isPaused ? 'paused' : 'running',
+              '@media (prefers-reduced-motion: reduce)': {
+                animation: 'none',
+              },
+              '& > div': {
+                width: { xs: 300, sm: 340, md: 360, lg: 380 },
+                minWidth: { xs: 300, sm: 340, md: 360, lg: 380 },
+              },
+            }}
+          >
+            {duplicated.map((item, index) => (
+              <TestimonialCard
+                key={`${item.name}-${index}`}
+                item={item}
+                theme={theme}
+                hoverSx={hoverSx}
+              />
+            ))}
+          </Box>
         </Box>
       </Container>
     </Box>
