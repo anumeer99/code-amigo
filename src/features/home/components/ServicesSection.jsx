@@ -58,7 +58,7 @@ export default function ServicesSection({ aiModalOpen, setAiModalOpen }) {
             color={brand.primary}
           />
 
-          <Box ref={gridRef}>
+          <Box ref={gridRef} sx={{ overflow: 'visible', pt: 1 }}>
             <Grid container spacing={3}>
               {services.map((service, index) => (
                   <Grid item xs={12} sm={6} lg={4} key={service.title}>
