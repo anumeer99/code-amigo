@@ -47,10 +47,10 @@ export default function ServicesSection({ aiModalOpen, setAiModalOpen }) {
 
   return (
     <>
-      <Box id="services" sx={{ ...sectionWrapperSx, background: bg.sections.warm, overflow: 'visible' }}>
+      <Box id="services" sx={{ ...sectionWrapperSx, background: bg.sections.warm }}>
         <Box sx={gradientDividerSx} />
 
-        <Container maxWidth="xl" sx={{ overflow: 'visible' }}>
+        <Container maxWidth="xl">
           <SectionHeader
             label="Our Services"
             title="Solutions We Deliver"
@@ -58,33 +58,27 @@ export default function ServicesSection({ aiModalOpen, setAiModalOpen }) {
             color={brand.primary}
           />
 
-          <Box ref={gridRef} sx={{ overflow: 'visible', pt: 1, pb: 0.5 }}>
-            <Grid container spacing={3} sx={{ overflow: 'visible' }}>
-              {services.map((service, index) => (
-                  <Grid item xs={12} sm={6} lg={4} key={service.title}>
-                    <Box
-                      sx={{
-                        overflow: 'visible',
-                        pt: 1,
-                        opacity: isInView ? 1 : 0,
-                        transform: isInView ? 'translateY(0)' : 'translateY(30px)',
-                        transition: entered
-                          ? 'none'
-                          : `opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1) ${index * 0.1}s, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1) ${index * 0.1}s`,
-                      }}
-                    >
-                      <ServiceCard
-                        icon={service.icon}
-                        title={service.title}
-                        description={service.description}
-                        colorKey={service.colorKey}
-                        onClick={() => handleServiceClick(service)}
-                      />
-                    </Box>
-                  </Grid>
-                ))}
-            </Grid>
-          </Box>
+          <Grid ref={gridRef} container spacing={3}>
+            {services.map((service, index) => (
+              <Grid item xs={12} sm={6} lg={4} key={service.title}>
+                <Box
+                  sx={entered ? {} : {
+                    opacity: 0,
+                    transform: 'translateY(30px)',
+                    transition: `opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1) ${index * 0.1}s, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1) ${index * 0.1}s`,
+                  }}
+                >
+                  <ServiceCard
+                    icon={service.icon}
+                    title={service.title}
+                    description={service.description}
+                    colorKey={service.colorKey}
+                    onClick={() => handleServiceClick(service)}
+                  />
+                </Box>
+              </Grid>
+            ))}
+          </Grid>
         </Container>
       </Box>
     </>

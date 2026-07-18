@@ -130,13 +130,13 @@ export default function ServicePage() {
 
       {/* Benefits */}
       {service.benefits?.length > 0 && (
-        <Box sx={{ py: { xs: 6, md: 8 }, background: theme.custom.bg.sections.sage, overflow: 'visible' }}>
-          <Container maxWidth="md" sx={{ overflow: 'visible' }}>
+        <Box sx={{ py: { xs: 6, md: 8 }, background: theme.custom.bg.sections.sage }}>
+          <Container maxWidth="md">
             <motion.div {...fadeInUp}>
               <Typography variant="h2" sx={subSectionHeadingSx}>Business Benefits</Typography>
-              <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' }, gap: 3, overflow: 'visible' }}>
+              <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' }, gap: 3 }}>
                 {service.benefits.map((benefit, i) => (
-                  <motion.div key={i} {...hoverScale} style={{ overflow: 'visible' }}>
+                  <motion.div key={i} {...hoverScale}>
                     <Box sx={{ ...cardBaseSx, ...cardHoverSx(accent), backdropFilter: theme.custom.glass.blurLight, height: '100%', cursor: 'default' }}>
                       <Typography variant="h6" sx={{ color: textPrimary, fontSize: theme.custom.fontSize.bodyLg, fontWeight: 600, mb: 1 }}>{benefit.title}</Typography>
                       <Typography variant="body2" sx={{ color: theme.custom.colors.textSecondary, fontSize: theme.custom.fontSize.chip, lineHeight: 1.6 }}>{benefit.description}</Typography>
@@ -211,15 +211,15 @@ export default function ServicePage() {
 
       {/* Related Services */}
       {relatedServices.length > 0 && (
-        <Box sx={{ ...relatedSectionSx, overflow: 'visible' }}>
-          <Container maxWidth="xl" sx={{ overflow: 'visible' }}>
+        <Box sx={relatedSectionSx}>
+          <Container maxWidth="xl">
             <motion.div {...fadeInUp}>
               <Typography variant="h3" sx={{ color: textPrimary, mb: 5, textAlign: 'center', fontSize: { xs: '1.5rem', md: '2rem' } }}>Related Services</Typography>
             </motion.div>
             <Grid container spacing={3}>
               {relatedServices.map((item) => (
                 <Grid item xs={12} sm={6} lg={4} key={item.slug}>
-                  <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} style={{ overflow: 'visible' }}>
+                  <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
                     <ServiceCard
                       icon={CARD_ICONS[item.slug]}
                       title={item.heroTitle}
