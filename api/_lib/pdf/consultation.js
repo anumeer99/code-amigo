@@ -15,7 +15,7 @@ function sanitizeFileName(name) {
 
 export function generateConsultationPDF(data) {
   const {
-    fullName, email, phone, country, countryCode, budget, projectDetails, submittedAt,
+    fullName, email, phone, dial, country, countryCode, budget, projectDetails, submittedAt,
   } = data;
 
   const referenceId = generateReferenceId();
@@ -41,7 +41,7 @@ export function generateConsultationPDF(data) {
   drawInfoGrid(doc, [
     { label: 'Full Name', value: fullName },
     { label: 'Email Address', value: email },
-    { label: 'Phone Number', value: phone ? `+${phone}` : '—' },
+    { label: 'Phone Number', value: phone ? `${dial || ''} ${phone}`.trim() : '—' },
     { label: 'Country', value: country },
     { label: 'Budget', value: budget || 'Not specified' },
   ]);

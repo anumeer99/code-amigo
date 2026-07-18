@@ -102,7 +102,8 @@ export default function ContactModal({ open, onClose }) {
       await sendEmail({
         fullName: formData.fullName.trim(),
         email: formData.email.trim(),
-        phone: `${selectedCountry.dial} ${formData.phone.trim()}`,
+        phone: formData.phone.trim(),
+        dial: selectedCountry.dial,
         country: selectedCountry.name,
         countryCode: selectedCountry.code,
         budget: formData.budget || 'Not specified',

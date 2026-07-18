@@ -45,7 +45,7 @@ function infoRowLink(label, href, text) {
     </tr>`;
 }
 
-export function consultationRequestTemplate({ fullName, email, phone, country, countryCode, budget, projectDetails, submittedAt, referenceId }) {
+export function consultationRequestTemplate({ fullName, email, phone, dial, country, countryCode, budget, projectDetails, submittedAt, referenceId }) {
   const dateStr = formatDate(submittedAt);
   const content = `
     <div style="background: linear-gradient(135deg, #8F5C45 0%, #774A37 100%); padding: 32px 32px 28px; text-align: center;">
@@ -60,7 +60,7 @@ export function consultationRequestTemplate({ fullName, email, phone, country, c
       <table style="width: 100%; border-collapse: collapse;">
         ${infoRow('Name', fullName)}
         ${infoRowLink('Email', `mailto:${email}`, email)}
-        ${infoRow('Phone', phone)}
+        ${infoRow('Phone', phone ? `${dial || ''} ${phone}`.trim() : '—')}
         ${infoRow('Country', `${country} (${countryCode})`)}
         ${infoRow('Budget', budget)}
       </table>

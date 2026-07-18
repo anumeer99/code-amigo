@@ -1,7 +1,7 @@
 const API_BASE = '/api';
 
 export async function sendEmail(payload) {
-  const { fullName, email, phone, country, countryCode, budget, projectDetails, submittedAt } = payload;
+  const { fullName, email, phone, dial, country, countryCode, budget, projectDetails, submittedAt } = payload;
 
   const res = await fetch(`${API_BASE}/send-email`, {
     method: 'POST',
@@ -9,7 +9,8 @@ export async function sendEmail(payload) {
     body: JSON.stringify({
       fullName: fullName.trim(),
       email: email.trim(),
-      phone: `${countryCode || ''} ${phone}`.trim(),
+      phone: phone.trim(),
+      dial: dial || '',
       country: country || '',
       countryCode: countryCode || '',
       budget: budget || 'Not specified',

@@ -17,7 +17,7 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed.' });
   }
 
-  const { fullName, email, phone, country, countryCode, budget, projectDetails, submittedAt } = req.body || {};
+  const { fullName, email, phone, dial, country, countryCode, budget, projectDetails, submittedAt } = req.body || {};
 
   if (!fullName || !email || !phone || !projectDetails) {
     return res.status(400).json({ error: 'Missing required fields.' });
@@ -25,13 +25,13 @@ export default async function handler(req, res) {
 
   try {
     const { doc, referenceId, fileName } = generateConsultationPDF({
-      fullName, email, phone, country, countryCode, budget, projectDetails, submittedAt,
+      fullName, email, phone, dial, country, countryCode, budget, projectDetails, submittedAt,
     });
 
     const pdfBuffer = await collectBuffer(doc);
 
     const transporter = getTransporter();
-    const html = consultationRequestTemplate({ fullName, email, phone, country, countryCode, budget, projectDetails, submittedAt, referenceId });
+    const html = consultationRequestTemplate({ fullName, email, phone, dial, country, countryCode, budget, projectDetails, submittedAt, referenceId });
 
     await transporter.sendMail({
       from: `"Code Amigo Website" <${GMAIL_USER}>`,
