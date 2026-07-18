@@ -47,10 +47,10 @@ export default function ServicesSection({ aiModalOpen, setAiModalOpen }) {
 
   return (
     <>
-      <Box id="services" sx={{ ...sectionWrapperSx, background: bg.sections.warm }}>
+      <Box id="services" sx={{ ...sectionWrapperSx, background: bg.sections.warm, overflow: 'visible' }}>
         <Box sx={gradientDividerSx} />
 
-        <Container maxWidth="xl">
+        <Container maxWidth="xl" sx={{ overflow: 'visible' }}>
           <SectionHeader
             label="Our Services"
             title="Solutions We Deliver"
@@ -58,12 +58,14 @@ export default function ServicesSection({ aiModalOpen, setAiModalOpen }) {
             color={brand.primary}
           />
 
-          <Box ref={gridRef} sx={{ overflow: 'visible', pt: 1 }}>
-            <Grid container spacing={3}>
+          <Box ref={gridRef} sx={{ overflow: 'visible', pt: 1, pb: 0.5 }}>
+            <Grid container spacing={3} sx={{ overflow: 'visible' }}>
               {services.map((service, index) => (
                   <Grid item xs={12} sm={6} lg={4} key={service.title}>
                     <Box
                       sx={{
+                        overflow: 'visible',
+                        pt: 1,
                         opacity: isInView ? 1 : 0,
                         transform: isInView ? 'translateY(0)' : 'translateY(30px)',
                         transition: entered

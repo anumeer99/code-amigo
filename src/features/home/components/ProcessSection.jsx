@@ -101,8 +101,8 @@ export default function ProcessSection() {
   })), [theme]);
 
   return (
-    <Box sx={{ ...sectionWrapperSx, background: theme.custom.sectionGradients.blueToLavender }}>
-      <Container maxWidth="lg">
+    <Box sx={{ ...sectionWrapperSx, background: theme.custom.sectionGradients.blueToLavender, overflow: 'visible' }}>
+      <Container maxWidth="lg" sx={{ overflow: 'visible' }}>
         <SectionHeader
           label="Our Process"
           title="From Idea to Launch"
@@ -110,7 +110,7 @@ export default function ProcessSection() {
           color={theme.custom.accent.green}
         />
 
-        <Box sx={{ position: 'relative', px: { xs: 0, md: 6 } }}>
+        <Box sx={{ position: 'relative', px: { xs: 0, md: 6 }, overflow: 'visible' }}>
           <Box
             sx={{
             position: 'absolute',
