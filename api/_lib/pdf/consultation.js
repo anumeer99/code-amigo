@@ -3,6 +3,16 @@ import {
   drawBlockText, drawFooter, generateReferenceId, formatDatePKT, formatTimePKT,
 } from './generator.js';
 
+function sanitizeFileName(name) {
+  if (!name || !name.trim()) return null;
+  return name
+    .trim()
+    .replace(/\s+/g, ' ')
+    .replace(/[\\/:*?"<>|]/g, '')
+    .replace(/[^a-zA-Z0-9\u00C0-\u024F\u0400-\u04FF\u0600-\u06FF\u0980-\u09FF\u1E00-\u1EFF ']/g, '')
+    .trim();
+}
+
 export function generateConsultationPDF(data) {
   const {
     fullName, email, phone, country, countryCode, budget, projectDetails, submittedAt,
@@ -42,5 +52,8 @@ export function generateConsultationPDF(data) {
 
   drawFooter(doc);
 
-  return { doc, referenceId, fileName: `Consultation_Request_${referenceId}.pdf` };
+  const safeName = sanitizeFileName(fullName);
+  const fileName = safeName ? `${safeName} Consultation Request.pdf` : 'Consultation Request.pdf';
+
+  return { doc, referenceId, fileName };
 }
