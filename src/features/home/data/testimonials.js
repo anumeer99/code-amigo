@@ -6,7 +6,7 @@ export const testimonials = [
     initials: 'SC',
     avatarColor: 'brand.blue',
     rating: 5,
-    testimonial: 'Code Amigo delivered a production-ready AI platform in just 8 weeks. Their engineering rigor and transparent communication made them feel like an extension of our team.',
+    testimonial: 'Rohan\'s team built our AI platform in just 8 weeks. They explained everything clearly and kept us in the loop the whole time. The final product was production ready and exactly what we needed. Their engineering skills are top notch.',
   },
   {
     name: 'Marcus Rodriguez',
@@ -15,7 +15,7 @@ export const testimonials = [
     initials: 'MR',
     avatarColor: 'brand.purple',
     rating: 5,
-    testimonial: 'We migrated our entire infrastructure to a microservices architecture with zero downtime. The team\'s DevOps expertise saved us months of potential headaches.',
+    testimonial: 'Rohan\'s team migrated our entire system to a microservices architecture with zero downtime. They knew exactly what they were doing and handled everything smoothly. The whole process felt organized and stress free.',
   },
   {
     name: 'Emily Watson',
@@ -24,7 +24,7 @@ export const testimonials = [
     initials: 'EW',
     avatarColor: 'accent.pink',
     rating: 5,
-    testimonial: 'The mobile app they built for us reduced patient onboarding time by 60%. Their understanding of healthcare compliance was impressive and reassuring.',
+    testimonial: 'The mobile app they built reduced our patient onboarding time by 60 percent. Ahmad\'s team understood healthcare compliance well and made sure everything was built to the right standard. It made a real difference for us.',
   },
   {
     name: 'David Kim',
@@ -33,7 +33,7 @@ export const testimonials = [
     initials: 'DK',
     avatarColor: 'accent.green',
     rating: 5,
-    testimonial: 'From concept to deployed MVP in 6 weeks. Code Amigo didn\'t just write code \u2014 they helped us define our product strategy and technical architecture.',
+    testimonial: 'From idea to deployed MVP in 6 weeks. Rohan\'s team didn\'t just write code. They helped us shape our product strategy and technical architecture from the ground up. Their input was invaluable and made our product much stronger.',
   },
   {
     name: 'Priya Sharma',
@@ -42,7 +42,7 @@ export const testimonials = [
     initials: 'PS',
     avatarColor: 'accent.amber',
     rating: 5,
-    testimonial: 'Their team transformed our legacy system into a modern, scalable platform. The ROI was evident within the first quarter of deployment.',
+    testimonial: 'The Code Amigo team transformed our old system into something modern and scalable. We saw return on investment within the first quarter of deployment. They were professional, communicative, and delivered exactly what they promised.',
   },
   {
     name: 'James Mitchell',
@@ -51,6 +51,6 @@ export const testimonials = [
     initials: 'JM',
     avatarColor: 'accent.cyan',
     rating: 5,
-    testimonial: 'Code Amigo\'s QA automation reduced our regression testing time from 3 days to 4 hours. Their systematic approach to quality is world-class.',
+    testimonial: 'Ahmad\'s team improved our testing process significantly. They cut our regression testing from 3 days down to just 4 hours. Their systematic approach to quality saved us a lot of time and gave us more confidence in every release.',
   },
 ];

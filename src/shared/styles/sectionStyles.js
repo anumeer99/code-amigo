@@ -89,6 +89,7 @@ export const gradientDividerSx = {
   width: '60%',
   height: 1,
   background: 'linear-gradient(90deg, transparent 0%, var(--color-border-hover) 50%, transparent 100%)',
+  pointerEvents: 'none',
 };
 
 export const relatedSectionSx = {

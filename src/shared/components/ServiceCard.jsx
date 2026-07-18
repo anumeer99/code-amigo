@@ -5,7 +5,7 @@ import { cardBaseSx } from '../styles/sectionStyles';
 
 export default function ServiceCard({ icon: Icon, title, description, colorKey, href, onClick, sx }) {
   const theme = useTheme();
-  const { accent, brand, hexToRgba, radius, transition, colors } = theme.custom;
+  const { accent, brand, hexToRgba, radius, transition, colors, bg, shadow } = theme.custom;
 
   const colorMap = useMemo(() => ({
     'accent.green': { hex: accent.green, iconBg: hexToRgba(accent.green, 0.1) },
@@ -18,22 +18,33 @@ export default function ServiceCard({ icon: Icon, title, description, colorKey, 
 
   const c = colorMap[colorKey] || colorMap['brand.blue'];
 
+  const isInteractive = !!(href || onClick);
+
   const cardSx = {
     ...cardBaseSx,
     height: '100%',
-    cursor: href || onClick ? 'pointer' : 'default',
-    transition: 'transform 0.2s ease, box-shadow 0.3s ease, border-color 0.3s ease, background 0.3s ease',
+    position: 'relative',
+    pointerEvents: 'auto',
+    cursor: isInteractive ? 'pointer' : 'default',
+    userSelect: 'none',
+    transition: 'transform 0.2s ease, border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease',
     '&:hover': {
-      borderColor: 'var(--color-border-hover)',
-      background: 'var(--color-surface-card)',
-      boxShadow: '0 8px 24px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.08)',
       transform: 'scale(1.03) translateY(-4px)',
+      borderColor: `${c.hex}30`,
+      background: hexToRgba(bg.card, 0.8),
+      boxShadow: shadow.card,
       '& .service-icon': {
-        transform: 'scale(1.1)',
+        background: hexToRgba(c.hex, 0.15),
         boxShadow: `0 4px 16px ${c.iconBg}`,
       },
     },
-    '&:active': { transform: 'scale(0.98)' },
+    '&:active': {
+      transform: 'scale(0.98)',
+    },
+    '&:focus-visible': {
+      outline: `2px solid ${c.hex}`,
+      outlineOffset: 2,
+    },
     ...sx,
   };
 
@@ -50,7 +61,7 @@ export default function ServiceCard({ icon: Icon, title, description, colorKey, 
           alignItems: 'center',
           justifyContent: 'center',
           mb: 3,
-          transition: transition.normal,
+          transition: 'background 0.3s ease, box-shadow 0.3s ease',
         }}
       >
         {typeof Icon === 'string' ? (
@@ -70,14 +81,34 @@ export default function ServiceCard({ icon: Icon, title, description, colorKey, 
 
   if (href) {
     return (
-      <Box component={RouterLink} to={href} onClick={onClick} sx={{ display: 'block', textDecoration: 'none', ...cardSx }}>
+      <Box
+        component={RouterLink}
+        to={href}
+        onClick={onClick}
+        tabIndex={0}
+        role="link"
+        aria-label={`${title} - View service details`}
+        sx={{ display: 'block', textDecoration: 'none', ...cardSx }}
+      >
         {content}
       </Box>
     );
   }
 
   return (
-    <Box onClick={onClick} sx={cardSx}>
+    <Box
+      onClick={onClick}
+      tabIndex={0}
+      role="button"
+      aria-label={title}
+      onKeyDown={(e) => {
+        if (onClick && (e.key === 'Enter' || e.key === ' ')) {
+          e.preventDefault();
+          onClick(e);
+        }
+      }}
+      sx={cardSx}
+    >
       {content}
     </Box>
   );

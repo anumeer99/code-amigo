@@ -1,5 +1,6 @@
 export const ROUTES = {
   HOME: '/',
+  BLOGS: '/blogs',
   BLOG_DETAIL: '/blog/:slug',
   SERVICES_AI: '/services/ai-solutions/:slug',
   WEB_DEVELOPMENT: '/services/webdevelopment',

@@ -120,6 +120,30 @@ export default function BlogDetailPage() {
                 <Typography variant="body2" sx={{ color: theme.custom.colors.textSecondary }}>{blog.readTime}</Typography>
               </Box>
             </Box>
+
+            {/* Featured Image */}
+            <Box
+              sx={{
+                mt: 5,
+                borderRadius: radius.lg,
+                overflow: 'hidden',
+                background: `linear-gradient(135deg, ${blog.categoryColor}08 0%, ${blog.categoryColor}02 100%)`,
+                border: `1px solid ${border.light}`,
+                aspectRatio: '16/9',
+                position: 'relative',
+              }}
+            >
+              {blog.image ? (
+                <Box
+                  component="img"
+                  src={blog.image}
+                  alt={blog.title}
+                  sx={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                />
+              ) : visualMap[blog.id] ? (
+                visualMap[blog.id]({ c: theme.custom.svg })
+              ) : null}
+            </Box>
           </motion.div>
         </Container>
       </Box>

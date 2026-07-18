@@ -1,6 +1,5 @@
 import { useRef, useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Box, Container, Grid } from '@mui/material';
+import { Box, Container } from '@mui/material';
 import { useTheme } from '@mui/material';
 import { useInView } from 'framer-motion';
 import SectionHeader from '../../../shared/components/SectionHeader';
@@ -23,7 +22,6 @@ const services = homeServices.map((s) => ({
 }));
 
 export default function ServicesSection({ aiModalOpen, setAiModalOpen }) {
-  const navigate = useNavigate();
   const theme = useTheme();
   const { brand, bg } = theme.custom;
   const gridRef = useRef(null);
@@ -36,14 +34,6 @@ export default function ServicesSection({ aiModalOpen, setAiModalOpen }) {
       return () => clearTimeout(timer);
     }
   }, [isInView]);
-
-  const handleServiceClick = (service) => {
-    if (service.hasModal) {
-      setAiModalOpen(true);
-    } else if (service.hasLink) {
-      navigate(service.link);
-    }
-  };
 
   return (
     <>
@@ -58,27 +48,37 @@ export default function ServicesSection({ aiModalOpen, setAiModalOpen }) {
             color={brand.primary}
           />
 
-          <Grid ref={gridRef} container spacing={3}>
+          <Box
+            ref={gridRef}
+            sx={{
+              display: 'grid',
+              gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', lg: 'repeat(3, 1fr)' },
+              gap: 3,
+              gridAutoRows: '1fr',
+            }}
+          >
             {services.map((service, index) => (
-              <Grid item xs={12} sm={6} lg={4} key={service.title}>
-                <Box
-                  sx={entered ? {} : {
-                    opacity: 0,
-                    transform: 'translateY(30px)',
-                    transition: `opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1) ${index * 0.1}s, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1) ${index * 0.1}s`,
-                  }}
-                >
-                  <ServiceCard
-                    icon={service.icon}
-                    title={service.title}
-                    description={service.description}
-                    colorKey={service.colorKey}
-                    onClick={() => handleServiceClick(service)}
-                  />
-                </Box>
-              </Grid>
+              <Box
+                key={service.title}
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  opacity: entered ? 1 : 0,
+                  transform: entered ? 'none' : 'translateY(30px)',
+                  transition: entered ? 'none' : `opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1) ${index * 0.1}s, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1) ${index * 0.1}s`,
+                }}
+              >
+                <ServiceCard
+                  icon={service.icon}
+                  title={service.title}
+                  description={service.description}
+                  colorKey={service.colorKey}
+                  href={service.hasLink ? service.link : undefined}
+                  onClick={service.hasModal ? () => setAiModalOpen(true) : undefined}
+                />
+              </Box>
             ))}
-          </Grid>
+          </Box>
         </Container>
       </Box>
     </>

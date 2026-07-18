@@ -80,12 +80,22 @@ export default function BlogCard({ blog, Visual, index = 0 }) {
           <Box
             className="blog-visual"
             sx={{
-              position: 'relative',
+              position: 'absolute',
+              inset: 0,
               zIndex: 1,
               transition: theme.custom.transition.transform,
             }}
           >
-            {Visual && <Visual c={theme.custom.svg} />}
+            {blog.image ? (
+              <Box
+                component="img"
+                src={blog.image}
+                alt={blog.title}
+                sx={{ width: '100%', height: '100%', objectFit: 'cover' }}
+              />
+            ) : Visual ? (
+              <Visual c={theme.custom.svg} />
+            ) : null}
           </Box>
         </Box>
         <CardContent sx={{ p: { xs: 2.5, md: 3 }, flex: 1, display: 'flex', flexDirection: 'column' }}>

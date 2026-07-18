@@ -7,6 +7,7 @@ import Header from '../shared/components/Header';
 import Footer from '../shared/components/Footer';
 
 const HomePage = lazy(() => import('../features/home/pages/HomePage'));
+const BlogsPage = lazy(() => import('../features/blogs/pages/BlogsPage'));
 const BlogDetailPage = lazy(() => import('../features/blogs/pages/BlogDetailPage'));
 const ServicePage = lazy(() => import('../features/services/pages/ServicePage'));
 const CareersPage = lazy(() => import('../features/careers/pages/CareersPage'));
@@ -75,6 +76,7 @@ export default function App() {
             <Suspense fallback={<PageLoader />}>
               <Routes>
                 <Route path={ROUTES.HOME} element={<HomePage />} />
+                <Route path={ROUTES.BLOGS} element={<BlogsPage />} />
                 <Route path={ROUTES.BLOG_DETAIL} element={<BlogDetailPage />} />
                 <Route path={ROUTES.SERVICES_AI} element={<ServicePage />} />
                 <Route path={ROUTES.WEB_DEVELOPMENT} element={<ServicePage />} />
