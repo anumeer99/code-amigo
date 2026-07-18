@@ -188,4 +188,3 @@ export function drawFooter(doc) {
   }
 }
 
-export { generateReferenceId, formatDatePKT, formatTimePKT, BRAND };
