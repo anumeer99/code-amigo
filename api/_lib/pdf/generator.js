@@ -26,7 +26,7 @@ export function generateReferenceId() {
   return `CA-${date}-${rand}`;
 }
 
-function formatDatePKT(dateStr) {
+export function formatDatePKT(dateStr) {
   const date = dateStr ? new Date(dateStr) : new Date();
   return date.toLocaleString('en-US', {
     timeZone: 'Asia/Karachi',
@@ -36,7 +36,7 @@ function formatDatePKT(dateStr) {
   });
 }
 
-function formatTimePKT(dateStr) {
+export function formatTimePKT(dateStr) {
   const date = dateStr ? new Date(dateStr) : new Date();
   return date.toLocaleString('en-US', {
     timeZone: 'Asia/Karachi',
