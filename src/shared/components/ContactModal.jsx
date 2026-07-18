@@ -95,7 +95,7 @@ export default function ContactModal({ open, onClose }) {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   const form = useForm({
-    initialValues: { fullName: '', email: '', phone: '', country: 'PK', budget: '', projectDetails: '' },
+    initialValues: { fullName: '', email: '', phone: '', country: 'US', budget: '', projectDetails: '' },
     requiredFields: ['fullName', 'email', 'phone', 'projectDetails'],
     onSubmit: async (formData) => {
       const selectedCountry = countries.find((c) => c.code === formData.country) || countries[0];
