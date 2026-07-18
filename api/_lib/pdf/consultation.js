@@ -31,7 +31,7 @@ export function generateConsultationPDF(data) {
   drawInfoGrid(doc, [
     { label: 'Full Name', value: fullName },
     { label: 'Email Address', value: email },
-    { label: 'Phone Number', value: `${countryCode ? `+${countryCode}` : ''} ${phone}`.trim() },
+    { label: 'Phone Number', value: phone ? `+${phone}` : '—' },
     { label: 'Country', value: country },
     { label: 'Budget', value: budget || 'Not specified' },
   ]);

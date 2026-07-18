@@ -41,7 +41,7 @@ function formatTimePKT(dateStr) {
 export function createDocument(options = {}) {
   const doc = new PDFDocument({
     size: 'A4',
-    margins: { top: 0, bottom: 0, left: 0, right: 0 },
+    margins: { top: 50, bottom: 70, left: 50, right: 50 },
     bufferPages: true,
     info: {
       Title: options.title || 'Code Amigo Document',

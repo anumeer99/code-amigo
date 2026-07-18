@@ -276,7 +276,7 @@ export default function ContactModal({ open, onClose }) {
           error={form.errors.projectDetails}
           touched={form.touched.projectDetails}
           rows={isMobile ? 4 : 5}
-          maxLength={2000}
+          maxLength={5000}
           showCount
           sx={{ mb: 0 }}
         />

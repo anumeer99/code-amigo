@@ -19,7 +19,7 @@ export function validateField(field, value) {
     case 'projectDetails':
       if (!value.trim()) return 'Project details are required.';
       if (value.trim().length < 20) return 'Please provide at least 20 characters.';
-      if (value.trim().length > 2000) return 'Please limit your message to 2,000 characters.';
+      if (value.trim().length > 5000) return 'Please limit your message to 5,000 characters.';
       return '';
     case 'address':
       if (!value.trim()) return 'Address is required.';
