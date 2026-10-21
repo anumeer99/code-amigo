@@ -2,6 +2,8 @@ import { Box, Container, Typography, Button } from '@mui/material';
 import { useTheme } from '@mui/material';
 import { motion } from 'framer-motion';
 import { radialOverlay } from '../../../shared/styles/sectionStyles';
+import ContactModal from '../../../shared/components/ContactModal';
+import useModal from '../../../shared/hooks/useModal';
 import { gradientButtonLgSx, outlinedButtonSx } from '../../../shared/styles/buttonStyles';
 
 const FloatingShape = ({ sx, delay = 0 }) => (
@@ -28,6 +30,7 @@ const FloatingShape = ({ sx, delay = 0 }) => (
 export default function HeroSection() {
   const theme = useTheme();
   const { brand, hexToRgba, colors } = theme.custom;
+  const contactModal = useModal(false);
 
   return (
     <Box
@@ -55,6 +58,20 @@ export default function HeroSection() {
           transition={{ duration: 0.8, ease: theme.custom.easing.standard }}
         >
           <Typography
+            variant="overline"
+            sx={{
+              display: 'block',
+              mb: 3,
+              color: brand.primary,
+              fontWeight: 700,
+              letterSpacing: '0.14em',
+              fontSize: { xs: '0.75rem', md: '0.85rem' },
+            }}
+          >
+            AI Solutions · Custom Software Development
+          </Typography>
+
+          <Typography
             variant="h1"
             sx={{
               fontSize: { xs: '2.8rem', sm: '3.5rem', md: '4.2rem', lg: '5rem' },
@@ -62,7 +79,7 @@ export default function HeroSection() {
               color: colors.textPrimary,
             }}
           >
-            We Build{' '}
+            Turn Your Ideas Into Powerful{' '}
             <Box
               component="span"
               sx={{
@@ -74,7 +91,6 @@ export default function HeroSection() {
             >
               Digital Products
             </Box>
-            {' '}That Scale
           </Typography>
 
           <Typography
@@ -89,14 +105,14 @@ export default function HeroSection() {
               fontSize: { xs: '1.05rem', md: '1.2rem' },
             }}
           >
-            We craft software with clean code, thoughtful design, and long-term vision, engineered to grow with your business, not against it.
+            We help businesses build AI-powered solutions, web applications, and mobile products — from the first idea to a reliable, production-ready solution.
           </Typography>
 
           <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', flexWrap: 'wrap' }}>
             <Button
               variant="contained"
               size="large"
-              href="#contact"
+              onClick={contactModal.handleOpen}
               sx={{
                 ...gradientButtonLgSx,
                 transition: 'transform 0.2s ease, box-shadow 0.2s ease',
@@ -104,7 +120,7 @@ export default function HeroSection() {
                 '&:active': { transform: 'scale(0.98)' },
               }}
             >
-              Get Started
+              Discuss Your Project
             </Button>
             <Button
               variant="outlined"
@@ -117,11 +133,20 @@ export default function HeroSection() {
                 '&:active': { transform: 'scale(0.98)' },
               }}
             >
-              View Our Work
+              Explore Our Work
             </Button>
           </Box>
+
+          <Typography
+            variant="body2"
+            sx={{ color: colors.textMuted, mt: 5, fontSize: { xs: '0.9rem', md: '0.95rem' } }}
+          >
+            Thoughtful engineering. Practical AI. Software built for real business needs.
+          </Typography>
         </motion.div>
       </Container>
+
+      <ContactModal open={contactModal.open} onClose={contactModal.handleClose} />
     </Box>
   );
 }
