@@ -101,7 +101,14 @@ export default function ProcessSection() {
   })), [theme]);
 
   return (
-    <Box sx={{ ...sectionWrapperSx, background: theme.custom.sectionGradients.blueToLavender }}>
+    <Box
+      sx={{
+        ...sectionWrapperSx,
+        background: theme.custom.sectionGradients.blueToLavender,
+        // Cards slide in from the side; clip so their start offset never widens the page.
+        overflowX: 'clip',
+      }}
+    >
       <Container maxWidth="lg">
         <SectionHeader
           label="Our Process"
