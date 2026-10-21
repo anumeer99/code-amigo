@@ -38,7 +38,7 @@ export default function HeroSection() {
       sx={{
         minHeight: ['100vh', '100svh'],
         // Top padding clears the fixed header so content never slides under it on short screens.
-        pt: { xs: 17, md: 20 },
+        pt: { xs: 15, md: 17 },
         pb: { xs: 8, md: 10 },
         display: 'flex',
         alignItems: 'center',
