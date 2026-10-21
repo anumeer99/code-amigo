@@ -17,6 +17,9 @@ import { COMPANY, CONTACT, SOCIAL } from '../constants/company';
 import { ROUTES } from '../constants/routes';
 import { footerColumnHeadingSx } from '../styles/sectionStyles';
 
+// Social links are hidden until real profile URLs are set in constants/company.js.
+const SHOW_SOCIAL_LINKS = false;
+
 const socialIconMap = {
   [SOCIAL.facebook]: FaFacebookF,
   [SOCIAL.twitter]: FaTwitter,
@@ -141,6 +144,7 @@ export default function Footer() {
                       </Typography>
                     </Box>
                   </Box>
+                  {SHOW_SOCIAL_LINKS && (
                   <Box sx={{ display: 'flex', gap: 1 }}>
                     {FOOTER_LINKS.social.map((social) => {
                       const Icon = socialIconMap[social.url];
@@ -172,6 +176,7 @@ export default function Footer() {
                       );
                     })}
                   </Box>
+                  )}
                 </motion.div>
               </Grid>
 
