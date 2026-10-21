@@ -36,7 +36,10 @@ export default function HeroSection() {
     <Box
       id="home"
       sx={{
-        minHeight: '100vh',
+        minHeight: ['100vh', '100svh'],
+        // Top padding clears the fixed header so content never slides under it on short screens.
+        pt: { xs: 17, md: 20 },
+        pb: { xs: 8, md: 10 },
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -64,11 +67,14 @@ export default function HeroSection() {
               mb: 3,
               color: brand.primary,
               fontWeight: 700,
-              letterSpacing: '0.14em',
+              letterSpacing: { xs: '0.1em', sm: '0.14em' },
+              lineHeight: 1.8,
               fontSize: { xs: '0.75rem', md: '0.85rem' },
             }}
           >
-            AI Solutions · Custom Software Development
+            <Box component="span" sx={{ display: { xs: 'block', sm: 'inline' } }}>AI Solutions</Box>
+            <Box component="span" sx={{ display: { xs: 'none', sm: 'inline' }, mx: 1 }} aria-hidden="true">·</Box>
+            <Box component="span" sx={{ display: { xs: 'block', sm: 'inline' } }}>Custom Software Development</Box>
           </Typography>
 
           <Typography
@@ -77,6 +83,9 @@ export default function HeroSection() {
               fontSize: { xs: '2.8rem', sm: '3.5rem', md: '4.2rem', lg: '5rem' },
               mb: 4,
               color: colors.textPrimary,
+              textWrap: 'balance',
+              // Short laptop screens: smaller headline keeps the CTA buttons above the fold.
+              '@media (max-height: 760px) and (min-width: 900px)': { fontSize: '3.6rem', mb: 3 },
             }}
           >
             Turn Your Ideas Into Powerful{' '}
@@ -87,6 +96,7 @@ export default function HeroSection() {
                 backgroundClip: 'text',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
+                whiteSpace: { xs: 'normal', sm: 'nowrap' },
               }}
             >
               Digital Products
@@ -108,7 +118,16 @@ export default function HeroSection() {
             We help businesses build AI-powered solutions, web applications, and mobile products — from the first idea to a reliable, production-ready solution.
           </Typography>
 
-          <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', flexWrap: 'wrap' }}>
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: { xs: 'column', sm: 'row' },
+              alignItems: 'center',
+              gap: 2,
+              justifyContent: 'center',
+              '& .MuiButton-root': { width: { xs: '100%', sm: 'auto' }, maxWidth: { xs: 320, sm: 'none' } },
+            }}
+          >
             <Button
               variant="contained"
               size="large"
